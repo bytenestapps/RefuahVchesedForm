@@ -1,0 +1,378 @@
+/* ============================================================
+   Custom fonts — Lemon Sans Rounded (Light / Regular / Bold)
+============================================================ */
+@font-face {
+  font-family: 'Lemon Sans Rounded';
+  src: url('assets/fonts/Lemon%20Sans%20Rounded%20Light.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Lemon Sans Rounded';
+  src: url('assets/fonts/Lemon%20Sans%20Rounded%20Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Lemon Sans Rounded';
+  src: url('assets/fonts/Lemon%20Sans%20Rounded%20Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --brand: #ea0029;
+  --brand-dark: #b7001f;
+  --bg: #f7f7f5;
+  --card: #ffffff;
+  --border: #e2e2e2;
+  --text: #222;
+  --muted: #666;
+  --accent: #fde6ea;
+  --danger: #b00020;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: 'Lemon Sans Rounded', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-weight: 400;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+}
+
+.container {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 32px 20px 80px;
+}
+
+.page-header { text-align: center; margin-bottom: 32px; }
+.page-header .page-logo {
+  display: block;
+  max-width: 200px;
+  width: 100%;
+  height: auto;
+  margin: 0 auto 16px;
+}
+.page-header h1 { margin: 0 0 4px; color: var(--brand-dark); }
+.page-header p { color: var(--muted); margin: 0; }
+
+.form-section, .dept-section {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 20px;
+}
+
+h2, h3 { margin-top: 0; color: var(--brand-dark); }
+h3 small { font-weight: normal; color: var(--muted); font-size: 0.8em; }
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 600px) {
+  .grid-2 { grid-template-columns: 1fr; }
+}
+
+label {
+  display: block;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+/* Push the form control onto its own line below the label text + asterisk */
+label:not(.chip) > input,
+label:not(.chip) > select,
+label:not(.chip) > textarea {
+  display: block;
+  margin-top: 6px;
+}
+
+label.full { grid-column: 1 / -1; margin-top: 16px; }
+
+.req { color: var(--danger); font-weight: 600; }
+.muted { color: var(--muted); font-size: 0.8em; }
+
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="file"],
+textarea,
+select {
+  padding: 10px 12px;
+  font-size: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--text);
+  font-family: inherit;
+  width: 100%;
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px rgba(234, 0, 41, 0.15);
+}
+
+.hint {
+  color: var(--muted);
+  margin: -8px 0 16px;
+  font-size: 0.9rem;
+}
+
+.notice {
+  background: #fff7e6;
+  border: 1px solid #ffd591;
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin: 0 0 16px;
+  font-size: 0.9rem;
+  color: #5a3e00;
+}
+
+/* ============================================================
+   Cards
+============================================================ */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+@media (max-width: 720px) {
+  .cards { grid-template-columns: repeat(2, 1fr); }
+}
+
+.card {
+  position: relative;
+  background: #fff;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  padding: 20px 12px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  transition: transform 0.1s ease, background 0.2s ease, border-color 0.2s ease, filter 0.2s ease;
+  font-family: inherit;
+  font-size: 0.95rem;
+  color: var(--text);
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  border-color: var(--brand);
+}
+
+.card-icon {
+  width: 48px;
+  height: 48px;
+  display: block;
+}
+
+.card-title {
+  font-weight: 600;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.check {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--brand);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  opacity: 0;
+  transform: scale(0.6);
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.card[aria-pressed="true"] {
+  background: var(--accent);
+  border-color: var(--brand);
+  filter: brightness(0.96);
+}
+
+.card[aria-pressed="true"] .check {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ============================================================
+   Chips (day / time selectors)
+============================================================ */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  position: relative;
+  padding: 8px 14px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  cursor: pointer;
+  background: #fff;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+  font-size: 0.9rem;
+  color: var(--text);
+  user-select: none;
+}
+
+.chip input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.chip:has(input:checked) {
+  background: var(--brand);
+  border-color: var(--brand);
+  color: #fff;
+}
+
+fieldset { border: none; padding: 0; margin: 0 0 16px; }
+legend { font-weight: 600; margin-bottom: 8px; color: var(--text); }
+
+/* ============================================================
+   Submit
+============================================================ */
+.submit-btn {
+  width: 100%;
+  padding: 14px;
+  background: var(--brand);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.submit-btn:hover { background: var(--brand-dark); }
+.submit-btn:disabled { background: #aaa; cursor: not-allowed; }
+
+.status {
+  margin-top: 16px;
+  text-align: center;
+  font-size: 0.95rem;
+  min-height: 1.2em;
+}
+
+.status.success { color: var(--brand-dark); }
+.status.error { color: var(--danger); }
+
+/* Google Places dropdown sits above everything */
+.pac-container { z-index: 9999; }
+
+/* ============================================================
+   Step wizard
+============================================================ */
+.step[hidden] { display: none; }
+
+.step-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.step-dot {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--muted);
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.step-dot.is-active {
+  background: var(--brand);
+  border-color: var(--brand);
+  color: #fff;
+}
+
+.step-dot.is-complete {
+  background: var(--brand);
+  border-color: var(--brand);
+  color: #fff;
+}
+
+.step-line {
+  flex: 0 1 48px;
+  height: 2px;
+  background: var(--border);
+}
+
+.step-line.is-complete {
+  background: var(--brand);
+}
+
+.step-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.step-nav .submit-btn,
+.step-nav .next-btn {
+  margin-left: auto;
+  width: auto;
+  padding: 12px 28px;
+}
+
+.nav-btn {
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 10px;
+  cursor: pointer;
+  border: 2px solid var(--brand);
+  transition: background 0.2s, color 0.2s;
+  font-family: inherit;
+}
+
+.next-btn {
+  background: var(--brand);
+  color: #fff;
+}
+
+.next-btn:hover { background: var(--brand-dark); border-color: var(--brand-dark); }
+
+.back-btn {
+  background: #fff;
+  color: var(--brand);
+}
+
+.back-btn:hover { background: var(--accent); }
+
+.nav-btn:disabled { opacity: 0.5; cursor: not-allowed; }

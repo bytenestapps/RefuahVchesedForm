@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Refuah V'Chesed — Get Involved</title>
+  <link rel="icon" type="image/svg+xml" href="assets/icons/icon.svg">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="container">
+    <header class="page-header">
+      <img src="assets/icons/main.svg" alt="Refuah V'Chesed" class="page-logo">
+      <h1>Get Involved</h1>
+      <p>Join the Refuah V'Chesed family of volunteers</p>
+    </header>
+
+    <form id="volunteer-form" novalidate>
+
+      <!-- Step indicator -->
+      <div class="step-indicator" aria-hidden="true">
+        <span class="step-dot is-active" data-indicator="1">1</span>
+        <span class="step-line"></span>
+        <span class="step-dot" data-indicator="2">2</span>
+        <span class="step-line"></span>
+        <span class="step-dot" data-indicator="3">3</span>
+      </div>
+
+      <!-- ============================================================
+           STEP 1 — Personal Information
+      ============================================================ -->
+      <div class="step" data-step="1">
+      <section class="form-section">
+        <h2>Personal Information</h2>
+        <div class="grid-2">
+          <label>
+            Legal first name <span class="req">*</span>
+            <input type="text" name="legalFirstName" autocomplete="given-name">
+          </label>
+          <label>
+            Legal last name <span class="req">*</span>
+            <input type="text" name="legalLastName" autocomplete="family-name">
+          </label>
+          <label dir="rtl" lang="yi">
+            ערשטע נאמען אין אידיש <span class="req">*</span>
+            <input type="text" name="yiddishFirstName" dir="rtl" lang="yi">
+          </label>
+          <label dir="rtl" lang="yi">
+            לעצטע נאמען אין אידיש <span class="req">*</span>
+            <input type="text" name="yiddishLastName" dir="rtl" lang="yi">
+          </label>
+        </div>
+
+        <label class="full">
+          Address <span class="req">*</span>
+          <input type="text" id="address" name="address"
+                 placeholder="Start typing your address..."
+                 autocomplete="off">
+        </label>
+      </section>
+
+      <div class="step-nav">
+        <button type="button" class="nav-btn next-btn" data-next>Next →</button>
+      </div>
+      </div><!-- /step 1 -->
+
+      <!-- ============================================================
+           STEP 2 — Department availability + per-department details
+      ============================================================ -->
+      <div class="step" data-step="2" hidden>
+      <section class="form-section">
+        <h2>Department availability</h2>
+        <p class="hint">Select all that apply.</p>
+
+        <div class="cards">
+          <button type="button" class="card" data-dept="chaim-vchesed" aria-pressed="false">
+            <img src="assets/icons/chaim-vchesed.svg" alt="" class="card-icon">
+            <span class="card-title">Chaim V'chesed</span>
+            <span class="check" aria-hidden="true">✓</span>
+          </button>
+
+          <button type="button" class="card" data-dept="chesed-on-the-go" aria-pressed="false">
+            <img src="assets/icons/chesed-on-the-go.svg" alt="" class="card-icon">
+            <span class="card-title">Chesed on the go</span>
+            <span class="check" aria-hidden="true">✓</span>
+          </button>
+
+          <button type="button" class="card" data-dept="gemach-refuah" aria-pressed="false">
+            <img src="assets/icons/gemach-refuah.svg" alt="" class="card-icon">
+            <span class="card-title">Gemach refuah</span>
+            <span class="check" aria-hidden="true">✓</span>
+          </button>
+
+          <button type="button" class="card" data-dept="mesamchim" aria-pressed="false">
+            <img src="assets/icons/mesamchim.svg" alt="" class="card-icon">
+            <span class="card-title">Mesamchim</span>
+            <span class="check" aria-hidden="true">✓</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Chaim V'chesed -->
+      <section class="dept-section" data-dept-section="chaim-vchesed" hidden>
+        <h3>Chaim V'chesed <small>(hospital food service)</small></h3>
+        <label class="full">
+          What can you do? <span class="req">*</span>
+          <textarea name="chaimVchesed_whatCanYouDo" rows="3"
+                    placeholder="e.g. deliver food, cook, coordinate..."></textarea>
+        </label>
+      </section>
+
+      <!-- Chesed on the go -->
+      <section class="dept-section" data-dept-section="chesed-on-the-go" hidden>
+        <h3>Chesed on the go <small>(trip service)</small></h3>
+        <p class="notice">* Must have a car</p>
+
+        <div class="grid-2">
+          <label>
+            Driver's license ID number <span class="req">*</span>
+            <input type="text" name="cotg_licenseId">
+          </label>
+          <label>
+            Upload driver's license <span class="req">*</span>
+            <small class="muted">(jpg, png, pdf — max 10MB)</small>
+            <input type="file" name="cotg_licenseFile" accept=".jpg,.jpeg,.png,.pdf,image/jpeg,image/png,application/pdf">
+          </label>
+
+          <label>
+            Car make <span class="req">*</span>
+            <select name="cotg_carMake" id="carMake">
+              <option value="">Loading makes...</option>
+            </select>
+          </label>
+          <label>
+            Car model <span class="req">*</span>
+            <select name="cotg_carModel" id="carModel" disabled>
+              <option value="">Select make first</option>
+            </select>
+          </label>
+
+          <label>
+            Car year <span class="req">*</span>
+            <input type="number" name="cotg_carYear" min="1950" max="2035" placeholder="e.g. 2020">
+          </label>
+          <label>
+            Seats available <span class="req">*</span>
+            <input type="number" name="cotg_seats" min="1" max="20" placeholder="e.g. 4">
+          </label>
+
+          <label class="full">
+            License plate number <span class="req">*</span>
+            <input type="text" name="cotg_licensePlate">
+          </label>
+        </div>
+      </section>
+
+      <!-- Gemach refuah -->
+      <section class="dept-section" data-dept-section="gemach-refuah" hidden>
+        <h3>Gemach refuah</h3>
+        <label class="full">
+          What can you do? <span class="req">*</span>
+          <textarea name="gemachRefuah_whatCanYouDo" rows="3"
+                    placeholder="e.g. deliver medical equipment, run errands..."></textarea>
+        </label>
+      </section>
+
+      <!-- Mesamchim -->
+      <section class="dept-section" data-dept-section="mesamchim" hidden>
+        <h3>Mesamchim</h3>
+        <label class="full">
+          Any special skills (guitar, piano, etc.) <span class="req">*</span>
+          <textarea name="mesamchim_skills" rows="3"
+                    placeholder="e.g. guitar, piano, magic, juggling..."></textarea>
+        </label>
+      </section>
+
+      <div class="step-nav">
+        <button type="button" class="nav-btn back-btn" data-back>← Back</button>
+        <button type="button" class="nav-btn next-btn" data-next>Next →</button>
+      </div>
+      </div><!-- /step 2 -->
+
+      <!-- ============================================================
+           STEP 3 — Availability
+      ============================================================ -->
+      <div class="step" data-step="3" hidden>
+      <section class="form-section">
+        <h2>Availability</h2>
+
+        <fieldset>
+          <legend>Days of the week</legend>
+          <div class="chips">
+            <label class="chip"><input type="checkbox" name="days" value="Sunday"><span>Sun</span></label>
+            <label class="chip"><input type="checkbox" name="days" value="Monday"><span>Mon</span></label>
+            <label class="chip"><input type="checkbox" name="days" value="Tuesday"><span>Tue</span></label>
+            <label class="chip"><input type="checkbox" name="days" value="Wednesday"><span>Wed</span></label>
+            <label class="chip"><input type="checkbox" name="days" value="Thursday"><span>Thu</span></label>
+            <label class="chip"><input type="checkbox" name="days" value="Friday"><span>Fri</span></label>
+            <label class="chip"><input type="checkbox" name="days" value="Saturday"><span>Sat</span></label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Time of day</legend>
+          <div class="chips">
+            <label class="chip"><input type="checkbox" name="times" value="Morning"><span>Morning</span></label>
+            <label class="chip"><input type="checkbox" name="times" value="Afternoon"><span>Afternoon</span></label>
+            <label class="chip"><input type="checkbox" name="times" value="Evening"><span>Evening</span></label>
+          </div>
+        </fieldset>
+      </section>
+
+      <div class="step-nav">
+        <button type="button" class="nav-btn back-btn" data-back>← Back</button>
+        <button type="submit" class="submit-btn">Submit</button>
+      </div>
+      </div><!-- /step 3 -->
+
+      <p id="status" class="status" role="status" aria-live="polite"></p>
+    </form>
+  </main>
+
+  <!-- ============================================================
+       Google Places Autocomplete
+       Replace YOUR_GOOGLE_MAPS_API_KEY with your real key.
+       Get one: https://developers.google.com/maps/documentation/javascript/get-api-key
+       If you don't want Google, remove these two <script> tags — the
+       Address field will still work as a plain text input.
+  ============================================================ -->
+  <script>
+    window.initAutocomplete = function () {
+      const input = document.getElementById('address');
+      if (!input || !window.google?.maps?.places) return;
+      const ac = new google.maps.places.Autocomplete(input, { types: ['address'] });
+      ac.setFields(['formatted_address']);
+    };
+  </script>
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA0s-vW4OCTqpj9SZHzgZlu4mYVzlBdu_Y&libraries=places&callback=initAutocomplete">
+  </script>
+
+  <script src="script.js"></script>
+</body>
+</html>
