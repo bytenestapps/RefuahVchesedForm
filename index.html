@@ -24,6 +24,8 @@
         <span class="step-dot" data-indicator="2">2</span>
         <span class="step-line"></span>
         <span class="step-dot" data-indicator="3">3</span>
+        <span class="step-line"></span>
+        <span class="step-dot" data-indicator="4">4</span>
       </div>
 
       <!-- ============================================================
@@ -41,13 +43,15 @@
             Legal last name <span class="req">*</span>
             <input type="text" name="legalLastName" autocomplete="family-name">
           </label>
-          <label dir="rtl" lang="yi">
-            ערשטע נאמען אין אידיש <span class="req">*</span>
-            <input type="text" name="yiddishFirstName" dir="rtl" lang="yi">
-          </label>
-          <label dir="rtl" lang="yi">
+          <label dir="rtl" lang="yi" class="yiddish-label">
             לעצטע נאמען אין אידיש <span class="req">*</span>
+            <small class="muted hebrew-hint" dir="ltr">(only Hebrew characters accepted)</small>
             <input type="text" name="yiddishLastName" dir="rtl" lang="yi">
+          </label>
+          <label dir="rtl" lang="yi" class="yiddish-label">
+            ערשטע נאמען אין אידיש <span class="req">*</span>
+            <small class="muted hebrew-hint" dir="ltr">(only Hebrew characters accepted)</small>
+            <input type="text" name="yiddishFirstName" dir="rtl" lang="yi">
           </label>
         </div>
 
@@ -87,7 +91,7 @@
 
           <button type="button" class="card" data-dept="gemach-refuah" aria-pressed="false">
             <img src="assets/icons/gemach-refuah.svg" alt="" class="card-icon">
-            <span class="card-title">Gemach refuah</span>
+            <span class="card-title">Gemach Medical Equipment</span>
             <span class="check" aria-hidden="true">✓</span>
           </button>
 
@@ -101,20 +105,48 @@
 
       <!-- Chaim V'chesed -->
       <section class="dept-section" data-dept-section="chaim-vchesed" hidden>
-        <h3>Chaim V'chesed <small>(hospital food service)</small></h3>
-        <label class="full">
-          What can you do? <span class="req">*</span>
-          <textarea name="chaimVchesed_whatCanYouDo" rows="3"
-                    placeholder="e.g. deliver food, cook, coordinate..."></textarea>
-        </label>
+        <h3>Chaim V'chesed - hospital food service</h3>
+        <p class="hint">Select at least one: <span class="req">*</span></p>
+        <div class="option-list">
+          <label class="option-item">
+            <input type="checkbox" name="chaimVchesed_tasks" value="Prepare sandwiches and cut-up fruits at the Chaim V'chesed center">
+            <span>Prepare sandwiches and cut-up fruits at the Chaim V'chesed center</span>
+          </label>
+          <label class="option-item">
+            <input type="checkbox" name="chaimVchesed_tasks" value="Package and prepare ready food for delivery">
+            <span>Package and prepare ready food for delivery</span>
+          </label>
+          <label class="option-item">
+            <input type="checkbox" name="chaimVchesed_tasks" value="Deliver food from center to the chesed rooms and fridges">
+            <span>Deliver food from center to the chesed rooms and fridges</span>
+          </label>
+          <label class="option-item">
+            <input type="checkbox" name="chaimVchesed_tasks" value="Set up chesed apartments near hospitals">
+            <span>Set up chesed apartments near hospitals</span>
+          </label>
+        </div>
       </section>
 
       <!-- Chesed on the go -->
       <section class="dept-section" data-dept-section="chesed-on-the-go" hidden>
-        <h3>Chesed on the go <small>(trip service)</small></h3>
-        <p class="notice">* Must have a car</p>
+        <h3>Chesed on the go - trip service</h3>
+        <p class="hint">Select at least one: <span class="req">*</span></p>
+        <div class="option-list">
+          <label class="option-item">
+            <input type="checkbox" name="cotg_options" value="Make trips with your own vehicle" data-show-vehicle>
+            <span>Make trips with your own vehicle</span>
+          </label>
+          <label class="option-item">
+            <input type="checkbox" name="cotg_options" value="Make trips with the Refuah V'Chesed wheelchair minivan">
+            <span>Make trips with the Refuah V'Chesed wheelchair minivan</span>
+          </label>
+          <label class="option-item">
+            <input type="checkbox" name="cotg_options" value="Make transfers with the Refuah V'Chesed ambulance">
+            <span>Make transfers with the Refuah V'Chesed ambulance</span>
+          </label>
+        </div>
 
-        <div class="grid-2">
+        <div class="grid-2 cotg-license">
           <label>
             Driver's license ID number <span class="req">*</span>
             <input type="text" name="cotg_licenseId">
@@ -124,51 +156,50 @@
             <small class="muted">(jpg, png, pdf — max 10MB)</small>
             <input type="file" name="cotg_licenseFile" accept=".jpg,.jpeg,.png,.pdf,image/jpeg,image/png,application/pdf">
           </label>
+        </div>
 
-          <label>
-            Car make <span class="req">*</span>
-            <select name="cotg_carMake" id="carMake">
-              <option value="">Loading makes...</option>
-            </select>
-          </label>
-          <label>
-            Car model <span class="req">*</span>
-            <select name="cotg_carModel" id="carModel" disabled>
-              <option value="">Select make first</option>
-            </select>
-          </label>
-
-          <label>
-            Car year <span class="req">*</span>
-            <input type="number" name="cotg_carYear" min="1950" max="2035" placeholder="e.g. 2020">
-          </label>
-          <label>
-            Seats available <span class="req">*</span>
-            <input type="number" name="cotg_seats" min="1" max="20" placeholder="e.g. 4">
-          </label>
-
-          <label class="full">
-            License plate number <span class="req">*</span>
-            <input type="text" name="cotg_licensePlate">
-          </label>
+        <div class="cotg-vehicle-details" hidden>
+          <h4>Vehicle details</h4>
+          <div class="grid-2">
+            <label>
+              Car make <span class="req">*</span>
+              <select name="cotg_carMake" id="carMake">
+                <option value="">Loading makes...</option>
+              </select>
+            </label>
+            <label>
+              Car model <span class="req">*</span>
+              <select name="cotg_carModel" id="carModel" disabled>
+                <option value="">Select make first</option>
+              </select>
+            </label>
+            <label>
+              Car year <span class="req">*</span>
+              <input type="number" name="cotg_carYear" min="1950" max="2035" placeholder="e.g. 2020">
+            </label>
+            <label>
+              Seats available <span class="req">*</span>
+              <input type="number" name="cotg_seats" min="1" max="20" placeholder="e.g. 4">
+            </label>
+            <label class="full">
+              License plate number <span class="req">*</span>
+              <input type="text" name="cotg_licensePlate">
+            </label>
+          </div>
         </div>
       </section>
 
-      <!-- Gemach refuah -->
+      <!-- Gemach Medical Equipment -->
       <section class="dept-section" data-dept-section="gemach-refuah" hidden>
-        <h3>Gemach refuah</h3>
-        <label class="full">
-          What can you do? <span class="req">*</span>
-          <textarea name="gemachRefuah_whatCanYouDo" rows="3"
-                    placeholder="e.g. deliver medical equipment, run errands..."></textarea>
-        </label>
+        <h3>Gemach Medical Equipment</h3>
+        <p class="info-text">Volunteers in our medical equipment gemach help ensure that essential items reach those who need them most. Responsibilities include delivering equipment such as oxygen concentrators, IV poles, wheelchairs, walkers, and other medical supplies to those who need them, and pick them up when they are no longer needed and returning them to our inventory.</p>
       </section>
 
       <!-- Mesamchim -->
       <section class="dept-section" data-dept-section="mesamchim" hidden>
-        <h3>Mesamchim</h3>
+        <h3>Mesamchim - Spirit lifters</h3>
         <label class="full">
-          Any special skills (guitar, piano, etc.) <span class="req">*</span>
+          Do you have any special skills? <small class="muted">(optional)</small>
           <textarea name="mesamchim_skills" rows="3"
                     placeholder="e.g. guitar, piano, magic, juggling..."></textarea>
         </label>
@@ -212,9 +243,45 @@
 
       <div class="step-nav">
         <button type="button" class="nav-btn back-btn" data-back>← Back</button>
-        <button type="submit" class="submit-btn">Submit</button>
+        <button type="button" class="nav-btn next-btn" data-next>Next →</button>
       </div>
       </div><!-- /step 3 -->
+
+      <!-- ============================================================
+           STEP 4 — Additional information
+      ============================================================ -->
+      <div class="step" data-step="4" hidden>
+      <section class="form-section">
+        <h2>Additional Information</h2>
+
+        <label class="option-item single">
+          <input type="checkbox" name="involvedOther" id="involvedOtherCheckbox">
+          <span>Are you involved in any other organisation?</span>
+        </label>
+
+        <label class="full other-org-field" hidden>
+          Which organisation? <span class="req">*</span>
+          <input type="text" name="otherOrgName">
+        </label>
+
+        <h3 style="margin-top: 24px;">Reference</h3>
+        <div class="grid-2">
+          <label>
+            Reference name <span class="req">*</span>
+            <input type="text" name="referenceName" autocomplete="off">
+          </label>
+          <label>
+            Reference phone number <span class="req">*</span>
+            <input type="text" name="referencePhone" autocomplete="off">
+          </label>
+        </div>
+      </section>
+
+      <div class="step-nav">
+        <button type="button" class="nav-btn back-btn" data-back>← Back</button>
+        <button type="submit" class="submit-btn">Submit</button>
+      </div>
+      </div><!-- /step 4 -->
 
       <p id="status" class="status" role="status" aria-live="polite"></p>
     </form>
@@ -231,7 +298,19 @@
     window.initAutocomplete = function () {
       const input = document.getElementById('address');
       if (!input || !window.google?.maps?.places) return;
-      const ac = new google.maps.places.Autocomplete(input, { types: ['address'] });
+
+      // Bounding box around greater Montreal — biases suggestions toward
+      // this area but does NOT hard-restrict results.
+      const montrealBounds = new google.maps.LatLngBounds(
+        { lat: 45.40, lng: -73.97 }, // SW corner
+        { lat: 45.72, lng: -73.44 }  // NE corner
+      );
+
+      const ac = new google.maps.places.Autocomplete(input, {
+        types: ['address'],
+        bounds: montrealBounds,
+        strictBounds: false
+      });
       ac.setFields(['formatted_address']);
     };
   </script>

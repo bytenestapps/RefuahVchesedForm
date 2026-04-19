@@ -103,6 +103,24 @@ label.full { grid-column: 1 / -1; margin-top: 16px; }
 .req { color: var(--danger); font-weight: 600; }
 .muted { color: var(--muted); font-size: 0.8em; }
 
+/* Yiddish labels: right-aligned, with the English hint still readable LTR */
+.yiddish-label { text-align: right; }
+.yiddish-label .hebrew-hint {
+  display: inline;
+  margin-inline-start: 6px;
+  direction: ltr;
+  unicode-bidi: isolate;
+  white-space: nowrap;
+}
+
+/* Invalid state — red border when non-Hebrew chars are typed */
+input.is-invalid,
+textarea.is-invalid,
+select.is-invalid {
+  border-color: var(--danger) !important;
+  box-shadow: 0 0 0 3px rgba(176, 0, 32, 0.15) !important;
+}
+
 input[type="text"],
 input[type="number"],
 input[type="email"],
@@ -253,6 +271,70 @@ input:focus, textarea:focus, select:focus {
 
 fieldset { border: none; padding: 0; margin: 0 0 16px; }
 legend { font-weight: 600; margin-bottom: 8px; color: var(--text); }
+
+/* ============================================================
+   Stacked option checkboxes (Chaim V'chesed tasks, COTG options)
+============================================================ */
+.option-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.option-item {
+  position: relative;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  background: #fff;
+  transition: background 0.15s, border-color 0.15s;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text);
+}
+
+.option-item input[type="checkbox"] {
+  margin: 0;
+  width: 18px;
+  height: 18px;
+  accent-color: var(--brand);
+  flex-shrink: 0;
+}
+
+.option-item:has(input:checked) {
+  background: var(--accent);
+  border-color: var(--brand);
+}
+
+/* Info / explanation paragraph (Gemach Medical Equipment) */
+.info-text {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 16px;
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--text);
+}
+
+/* Vehicle details subsection inside Chesed on the go */
+.cotg-vehicle-details {
+  margin-top: 8px;
+  padding-top: 16px;
+  border-top: 1px dashed var(--border);
+}
+.cotg-vehicle-details[hidden] { display: none; }
+.cotg-vehicle-details h4 {
+  margin: 0 0 12px;
+  color: var(--brand-dark);
+  font-size: 1rem;
+}
+.cotg-license { margin-top: 16px; }
 
 /* ============================================================
    Submit

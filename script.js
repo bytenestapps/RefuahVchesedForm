@@ -18,6 +18,46 @@ document.querySelectorAll('.card').forEach(card => {
 });
 
 // ============================================================
+// Yiddish name fields — allow any typing, but flag red if it isn't Hebrew
+// ============================================================
+// Allowed: Hebrew letters (א–ת), Yiddish ligatures (װ–ײ), spaces, hyphens, apostrophes
+const HEBREW_ONLY_PATTERN = /^[\u05D0-\u05EA\u05F0-\u05F2\s'\-]+$/;
+
+document.querySelectorAll('input[name="yiddishFirstName"], input[name="yiddishLastName"]').forEach(input => {
+  const check = () => {
+    const val = input.value;
+    const invalid = val !== '' && !HEBREW_ONLY_PATTERN.test(val);
+    input.classList.toggle('is-invalid', invalid);
+  };
+  input.addEventListener('input', check);
+  input.addEventListener('blur', check);
+});
+
+// ============================================================
+// Chesed on the go — show vehicle-details only when "own vehicle" is picked
+// ============================================================
+const vehicleDetailsEl = document.querySelector('.cotg-vehicle-details');
+function updateVehicleDetailsVisibility() {
+  const ownVehicle = document.querySelector('input[name="cotg_options"][data-show-vehicle]');
+  if (vehicleDetailsEl) vehicleDetailsEl.hidden = !(ownVehicle && ownVehicle.checked);
+}
+document.querySelectorAll('input[name="cotg_options"]').forEach(cb => {
+  cb.addEventListener('change', updateVehicleDetailsVisibility);
+});
+
+// ============================================================
+// Step 4 — "Are you involved in any other organisation?" toggle
+// ============================================================
+const involvedOtherCb = document.getElementById('involvedOtherCheckbox');
+const otherOrgField = document.querySelector('.other-org-field');
+function updateOtherOrgVisibility() {
+  if (otherOrgField) otherOrgField.hidden = !(involvedOtherCb && involvedOtherCb.checked);
+}
+if (involvedOtherCb) {
+  involvedOtherCb.addEventListener('change', updateOtherOrgVisibility);
+}
+
+// ============================================================
 // Car make/model dropdowns — free NHTSA vPIC API (no key)
 // ============================================================
 const makeSelect = document.getElementById('carMake');
@@ -114,6 +154,15 @@ function validateStep1() {
       return 'Please fill in all required personal information fields.';
     }
   }
+  // Yiddish fields must contain only Hebrew letters (+ space / hyphen / apostrophe).
+  const yFirst = String(fd.get('yiddishFirstName') || '').trim();
+  const yLast  = String(fd.get('yiddishLastName')  || '').trim();
+  if (!HEBREW_ONLY_PATTERN.test(yFirst)) {
+    return 'The Yiddish first name must contain Hebrew letters only.';
+  }
+  if (!HEBREW_ONLY_PATTERN.test(yLast)) {
+    return 'The Yiddish last name must contain Hebrew letters only.';
+  }
   return null;
 }
 
@@ -124,24 +173,21 @@ function validateStep2() {
     return 'Please select at least one department.';
   }
 
-  const deptRequiredFields = {
-    'chaim-vchesed': { field: 'chaimVchesed_whatCanYouDo', label: 'Chaim V\'chesed' },
-    'gemach-refuah': { field: 'gemachRefuah_whatCanYouDo', label: 'Gemach refuah' },
-    'mesamchim':     { field: 'mesamchim_skills',          label: 'Mesamchim' }
-  };
-  for (const dept of departments) {
-    const cfg = deptRequiredFields[dept];
-    if (cfg && !String(fd.get(cfg.field) || '').trim()) {
-      return `Please fill in the required field under "${cfg.label}".`;
+  // Chaim V'chesed: at least one task checkbox
+  if (departments.includes('chaim-vchesed')) {
+    if (getCheckedValues('chaimVchesed_tasks').length === 0) {
+      return 'Please select at least one option under "Chaim V\'chesed".';
     }
   }
 
+  // Chesed on the go: at least one option + driver's license fields
   if (departments.includes('chesed-on-the-go')) {
-    const cotgRequired = ['cotg_licenseId', 'cotg_carMake', 'cotg_carModel', 'cotg_carYear', 'cotg_seats', 'cotg_licensePlate'];
-    for (const key of cotgRequired) {
-      if (!String(fd.get(key) || '').trim()) {
-        return 'Please complete all "Chesed on the go" fields.';
-      }
+    const cotgOptions = getCheckedValues('cotg_options');
+    if (cotgOptions.length === 0) {
+      return 'Please select at least one option under "Chesed on the go".';
+    }
+    if (!String(fd.get('cotg_licenseId') || '').trim()) {
+      return 'Please enter your driver\'s license ID number.';
     }
     const file = fd.get('cotg_licenseFile');
     if (!file || file.size === 0) {
@@ -150,7 +196,19 @@ function validateStep2() {
     if (file.size > 10 * 1024 * 1024) {
       return 'Driver\'s license file is too large (max 10MB).';
     }
+    // Vehicle details only required when "own vehicle" is selected
+    if (cotgOptions.includes('Make trips with your own vehicle')) {
+      const vehicleRequired = ['cotg_carMake', 'cotg_carModel', 'cotg_carYear', 'cotg_seats', 'cotg_licensePlate'];
+      for (const key of vehicleRequired) {
+        if (!String(fd.get(key) || '').trim()) {
+          return 'Please complete all vehicle detail fields.';
+        }
+      }
+    }
   }
+
+  // Gemach Medical Equipment: info-only, no validation.
+  // Mesamchim: skills textarea is optional.
   return null;
 }
 
@@ -164,7 +222,23 @@ function validateStep3() {
   return null;
 }
 
-const stepValidators = { 1: validateStep1, 2: validateStep2, 3: validateStep3 };
+function validateStep4() {
+  const fd = new FormData(form);
+  if (involvedOtherCb && involvedOtherCb.checked) {
+    if (!String(fd.get('otherOrgName') || '').trim()) {
+      return 'Please specify which other organisation.';
+    }
+  }
+  if (!String(fd.get('referenceName') || '').trim()) {
+    return 'Please enter a reference name.';
+  }
+  if (!String(fd.get('referencePhone') || '').trim()) {
+    return 'Please enter a reference phone number.';
+  }
+  return null;
+}
+
+const stepValidators = { 1: validateStep1, 2: validateStep2, 3: validateStep3, 4: validateStep4 };
 
 // ============================================================
 // Step navigation
@@ -236,15 +310,19 @@ form.addEventListener('submit', async (e) => {
     departments: departments.join(', '),
     days: getCheckedValues('days').join(', '),
     times: getCheckedValues('times').join(', '),
-    chaimVchesed_whatCanYouDo: fd.get('chaimVchesed_whatCanYouDo') || '',
-    gemachRefuah_whatCanYouDo: fd.get('gemachRefuah_whatCanYouDo') || '',
-    mesamchim_skills: fd.get('mesamchim_skills') || '',
+    chaimVchesed_tasks: getCheckedValues('chaimVchesed_tasks').join('; '),
+    cotg_options: getCheckedValues('cotg_options').join('; '),
     cotg_licenseId: fd.get('cotg_licenseId') || '',
     cotg_carMake: fd.get('cotg_carMake') || '',
     cotg_carModel: fd.get('cotg_carModel') || '',
     cotg_carYear: fd.get('cotg_carYear') || '',
     cotg_seats: fd.get('cotg_seats') || '',
     cotg_licensePlate: fd.get('cotg_licensePlate') || '',
+    mesamchim_skills: fd.get('mesamchim_skills') || '',
+    involvedOther: (involvedOtherCb && involvedOtherCb.checked) ? 'Yes' : 'No',
+    otherOrgName: fd.get('otherOrgName') || '',
+    referenceName: fd.get('referenceName') || '',
+    referencePhone: fd.get('referencePhone') || '',
     fileName: '',
     mimeType: '',
     fileData: ''
@@ -280,6 +358,9 @@ form.addEventListener('submit', async (e) => {
         modelSelect.innerHTML = '<option value="">Select make first</option>';
         modelSelect.disabled = true;
       }
+      // hide vehicle details & other-org field again
+      updateVehicleDetailsVisibility();
+      updateOtherOrgVisibility();
       showStep(1);
       setStatus('Thank you! Your submission was received.', 'success');
     } else {

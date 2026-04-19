@@ -68,16 +68,20 @@ function doPost(e) {
       data.departments,
       data.days,
       data.times,
-      data.chaimVchesed_whatCanYouDo,
-      data.gemachRefuah_whatCanYouDo,
-      data.mesamchim_skills,
+      data.chaimVchesed_tasks,
+      data.cotg_options,
       data.cotg_licenseId,
+      fileUrl,
       data.cotg_carMake,
       data.cotg_carModel,
       data.cotg_carYear,
       data.cotg_seats,
       data.cotg_licensePlate,
-      fileUrl
+      data.mesamchim_skills,
+      data.involvedOther,
+      data.otherOrgName,
+      data.referenceName,
+      data.referencePhone
     ]);
 
     return ContentService
