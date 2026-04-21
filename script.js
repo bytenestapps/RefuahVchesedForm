@@ -350,7 +350,13 @@ form.addEventListener('submit', async (e) => {
       // text/plain avoids a CORS preflight that Apps Script can't answer
       headers: { 'Content-Type': 'text/plain;charset=utf-8' }
     });
-    const result = await res.json();
+    if (!res.ok) throw new Error('Server error (HTTP ' + res.status + ')');
+    let result;
+    try {
+      result = await res.json();
+    } catch {
+      throw new Error('Server returned an unexpected response (not JSON). The deployment URL may need to be updated.');
+    }
     if (result.status === 'ok') {
       form.reset();
       document.querySelectorAll('.card[aria-pressed="true"]').forEach(c => c.setAttribute('aria-pressed', 'false'));
@@ -369,7 +375,7 @@ form.addEventListener('submit', async (e) => {
       throw new Error(result.message || 'Unknown error');
     }
   } catch (err) {
-    setStatus('Submission failed: ' + err.message, 'error');
+    setStatus('Submission failed: ' + ((err && err.message) || String(err)), 'error');
   } finally {
     btn.disabled = false;
     btn.textContent = 'Submit';

@@ -8,6 +8,7 @@
  *     Paste this header row into row 1 exactly:
  *
  *     Timestamp | Legal First | Legal Last | Yiddish First | Yiddish Last |
+ *     Phone Number | Email Address |
  *     Address | Departments | Days | Times | ChaimVchesed - What | GemachRefuah - What |
  *     Mesamchim - Skills | COTG License ID | COTG Make | COTG Model | COTG Year |
  *     COTG Seats | COTG Plate | COTG License File
@@ -64,6 +65,8 @@ function doPost(e) {
       data.legalLastName,
       data.yiddishFirstName,
       data.yiddishLastName,
+      data.Phonenumber,
+      data.emailAddress,
       data.address,
       data.departments,
       data.days,
@@ -90,7 +93,7 @@ function doPost(e) {
 
   } catch (err) {
     return ContentService
-      .createTextOutput(JSON.stringify({ status: 'error', message: String(err && err.message || err) }))
+      .createTextOutput(JSON.stringify({ status: 'error', message: (err && err.message) ? String(err.message) : String(err) }))
       .setMimeType(ContentService.MimeType.JSON);
   }
 }
