@@ -125,6 +125,7 @@ input[type="text"],
 input[type="number"],
 input[type="email"],
 input[type="file"],
+input[type="tel"],
 textarea,
 select {
   padding: 10px 12px;
