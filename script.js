@@ -376,3 +376,19 @@ form.addEventListener('submit', async (e) => {
 //update footer year automatically
 const yearSpan = document.getElementById('currentYear'); if (yearSpan) { yearSpan.textContent = new Date().getFullYear();
 }
+// --- toggle "which other organisation" field ---
+const involvedOtherCheckbox = document.getElementById('involvedOtherCheckbox');
+const otherOrgContainer = document.querySelector('.other-org-field');
+
+if (involvedOtherCheckbox && otherOrgContainer) {
+  involvedOtherCheckbox.addEventListener('change', function() {
+    if (this.checked) {
+      otherOrgContainer.classList.remove('hidden');
+    } else {
+      otherOrgContainer.classList.add('hidden');
+      //Optional; clear the input if they uncheck it
+      const input = otherOrgContainer.querySelector('input');
+      if (input) input.value = '';
+    }
+  });
+}
