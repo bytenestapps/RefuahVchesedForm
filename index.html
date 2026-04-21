@@ -46,12 +46,12 @@
           <label dir="rtl" lang="yi" class="yiddish-label">
             ערשטע נאמען אין אידיש <span class="req">*</span>
             <small class="muted hebrew-hint" dir="ltr">(only Hebrew characters accepted)</small>
-            <input type="text" name="yiddishFirstName" dir="rtl" lang="yi">
+            <input type="text" name="yiddishFirstName" dir="rtl" lang="yi" autocomplete="new-password">
           </label>
           <label dir="rtl" lang="yi" class="yiddish-label">
             לעצטע נאמען אין אידיש <span class="req">*</span>
             <small class="muted hebrew-hint" dir="ltr">(only Hebrew characters accepted)</small>
-            <input type="text" name="yiddishLastName" dir="rtl" lang="yi">
+            <input type="text" name="yiddishLastName" dir="rtl" lang="yi" autocomplete="new-password">
           </label>
         </div>
 
@@ -272,7 +272,7 @@
           </label>
           <label>
             Reference phone number <span class="req">*</span>
-            <input type="text" name="referencePhone" autocomplete="off">
+            <input type="tel" name="referencePhone" id="phoneNumber" placeholder="e.g. 514-123-4567" autocomplete="off">
           </label>
         </div>
       </section>
