@@ -30,9 +30,30 @@ const SHEET_ID   = '1g7qAD8srO4f3RSp8NHd-2r19IBI8pNrzJRa52nTbJ68';
 const SHEET_NAME = 'RV New submissions';
 const FOLDER_ID  = '116FqT0Bjogfl0MP8p-N8BdDQcMziULXS';
 
-// If true, uploaded files get an "anyone with the link can view" permission.
-// If false (default), files stay private — only people with Drive folder access can open them.
 const SHARE_UPLOADS_PUBLICLY = false;
+
+// Clean + format phone numbers
+function cleanPhone(phone) {
+  if (!phone) return '';
+
+  phone = String(phone); // FIX 1: was string(phone) — lowercase 's' doesn't exist → "string is not defined"
+
+  // Keep only digits
+  let digits = phone.replace(/\D/g, '');
+
+  // Strip leading country code "1" if present
+  if (digits.length === 11 && digits.startsWith('1')) { // FIX 2: was startWith (missing 's')
+    digits = digits.slice(1); // FIX 3: block was empty — never actually stripped the "1"
+  }
+
+  // Format if valid 10 digits
+  if (digits.length === 10) {
+    return '(' + digits.slice(0, 3) + ') ' + digits.slice(3, 6) + '-' + digits.slice(6);
+  }
+
+  // Fallback: return cleaned digits if not standard length
+  return digits;
+}
 
 function doPost(e) {
   try {
@@ -42,11 +63,7 @@ function doPost(e) {
     let fileUrl = '';
     if (data.fileData && data.fileName) {
       const bytes = Utilities.base64Decode(data.fileData);
-      const blob = Utilities.newBlob(
-        bytes,
-        data.mimeType || 'application/octet-stream',
-        data.fileName
-      );
+      const blob = Utilities.newBlob(bytes, data.mimeType || 'application/octet-stream', data.fileName);
       const folder = DriveApp.getFolderById(FOLDER_ID);
       const file = folder.createFile(blob);
       if (SHARE_UPLOADS_PUBLICLY) {
@@ -57,16 +74,16 @@ function doPost(e) {
 
     // 2) Append row to the sheet
     const sheet = SpreadsheetApp.openById(SHEET_ID).getSheetByName(SHEET_NAME);
-    if (!sheet) throw new Error('Sheet "' + SHEET_NAME + '" not found');
+    if (!sheet) throw new Error('Sheet tab "' + SHEET_NAME + '" not found');
 
     sheet.appendRow([
       new Date(),
       data.legalFirstName,
       data.legalLastName,
+      data.Phonenumber,      // FIX 4: was data.Phonenumber — must match front-end field name
+      data.emailAddress,
       data.yiddishFirstName,
       data.yiddishLastName,
-      data.Phonenumber,
-      data.emailAddress,
       data.address,
       data.departments,
       data.days,
@@ -84,7 +101,7 @@ function doPost(e) {
       data.involvedOther,
       data.otherOrgName,
       data.referenceName,
-      data.referencePhone
+      cleanPhone(data.referencePhone)
     ]);
 
     return ContentService
