@@ -304,6 +304,8 @@ form.addEventListener('submit', async (e) => {
   const payload = {
     legalFirstName: fd.get('legalFirstName') || '',
     legalLastName: fd.get('legalLastName') || '',
+    phoneNumber: FormData.get('phoneNumber') || '',
+    emailAddress: FormData.get('emailAddress') || '',
     yiddishFirstName: fd.get('yiddishFirstName') || '',
     yiddishLastName: fd.get('yiddishLastName') || '',
     address: fd.get('address') || '',
