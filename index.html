@@ -46,12 +46,12 @@
           <label dir="rtl" lang="yi" class="yiddish-label">
             ערשטע נאמען אין אידיש <span class="req">*</span>
             <small class="muted hebrew-hint" dir="ltr">(only Hebrew characters accepted)</small>
-            <input type="text" name="yiddishLastName" dir="rtl" lang="yi">
+            <input type="text" name="yiddishFirstName" dir="rtl" lang="yi">
           </label>
           <label dir="rtl" lang="yi" class="yiddish-label">
             לעצטע נאמען אין אידיש <span class="req">*</span>
             <small class="muted hebrew-hint" dir="ltr">(only Hebrew characters accepted)</small>
-            <input type="text" name="yiddishFirstName" dir="rtl" lang="yi">
+            <input type="text" name="yiddishLastName" dir="rtl" lang="yi">
           </label>
         </div>
 
@@ -286,14 +286,9 @@
       <p id="status" class="status" role="status" aria-live="polite"></p>
     </form>
   </main>
-
-  <!-- ============================================================
-       Google Places Autocomplete
-       Replace YOUR_GOOGLE_MAPS_API_KEY with your real key.
-       Get one: https://developers.google.com/maps/documentation/javascript/get-api-key
-       If you don't want Google, remove these two <script> tags — the
-       Address field will still work as a plain text input.
-  ============================================================ -->
+  <footer>
+    <p>&copy; <span id="currentYear"></span> ByteNest Technologies inc. All rights reserved.</p>
+  </footer>
   <script>
     window.initAutocomplete = function () {
       const input = document.getElementById('address');

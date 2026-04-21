@@ -21,7 +21,7 @@ document.querySelectorAll('.card').forEach(card => {
 // Yiddish name fields — allow any typing, but flag red if it isn't Hebrew
 // ============================================================
 // Allowed: Hebrew letters (א–ת), Yiddish ligatures (װ–ײ), spaces, hyphens, apostrophes
-const HEBREW_ONLY_PATTERN = /^[\u05D0-\u05EA\u05F0-\u05F2\s'\-]+$/;
+const HEBREW_ONLY_PATTERN  = /^[\u05D0-\u05EA\u05F0-\u05F2\s\'\-\u05F3\u05F4]+$/;
 
 document.querySelectorAll('input[name="yiddishFirstName"], input[name="yiddishLastName"]').forEach(input => {
   const check = () => {
@@ -373,3 +373,6 @@ form.addEventListener('submit', async (e) => {
     btn.textContent = 'Submit';
   }
 });
+//update footer year automatically
+const yearSpan = document.getElementById('currentYear'); if (yearSpan) { yearSpan.textContent = new Date().getFullYear();
+}

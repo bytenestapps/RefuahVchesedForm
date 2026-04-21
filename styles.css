@@ -458,3 +458,17 @@ legend { font-weight: 600; margin-bottom: 8px; color: var(--text); }
 .back-btn:hover { background: var(--accent); }
 
 .nav-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+footer {
+  background-color: transparent;
+  color: var(--text);
+  text-align: center;
+  padding: 40px 20px;
+  margin-top: 60px;
+  font-family: inherit;
+}
+footer p {
+  margin: 0;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
